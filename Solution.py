@@ -1,8 +1,29 @@
 # Leetcode practice
 # Han Wang
+
+
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
 class Solution(object):
     def __init__(self):
         pass
+
+    # 283 Move zeros
+    def moveZeroes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        zero = 0  # records the position of "0"
+        for i in xrange(len(nums)):
+            if nums[i] != 0:
+                nums[i], nums[zero] = nums[zero], nums[i]
+                zero += 1
 
     # 343 Integer break (PASSED)
     def integerBreak(self, n):
@@ -34,6 +55,22 @@ class Solution(object):
         """
         # this is actually a brute force solution but with good time cost
         return sorted(a for row in matrix for a in row)[k - 1]
+
+    # 504 Base 7 (PASSED)
+    def convertToBase7(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        res = ''
+        if num<0:
+            res+='-'
+            num=-num
+        a = ''
+        while num>6:
+            a+=str(num%7)
+            num = int(num/7)
+        return res+(a+str(num))[::-1]
 
     # 728 Self dividing numbers (PASSED 90ms)
     def selfDividingNumbers(self, left, right):
@@ -75,11 +112,5 @@ class Solution(object):
                     return False
         return True
 
-m = [
-   [1,  5,  9],
-   [10, 11, 13],
-   [12, 13, 15]
-]
-kk = 8
 solution = Solution()
-print(solution.kthSmallest(m,kk))
+print(solution.moveZeroes([0, 1, 0, 3, 12]))

@@ -25,6 +25,16 @@ class Solution(object):
         # consider bitwise operation
         return (a^b) + ((a&b) << 1)
 
+    # 378 Kth Smallest Element in a Sorted Matrix (PASS 71ms)
+    def kthSmallest(self, matrix, k):
+        """
+        :type matrix: List[List[int]]
+        :type k: int
+        :rtype: int
+        """
+        # this is actually a brute force solution but with good time cost
+        return sorted(a for row in matrix for a in row)[k - 1]
+
     # 728 Self dividing numbers (PASSED 90ms)
     def selfDividingNumbers(self, left, right):
         """
@@ -65,5 +75,11 @@ class Solution(object):
                     return False
         return True
 
+m = [
+   [1,  5,  9],
+   [10, 11, 13],
+   [12, 13, 15]
+]
+kk = 8
 solution = Solution()
-print(solution.selfDividingNumbers(1,58))
+print(solution.kthSmallest(m,kk))

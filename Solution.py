@@ -79,6 +79,12 @@ class Solution(object):
                 b -= 1
         return a + 1, b + 1
 
+    # 190 Reverse bits (PASSED)
+    # @param n, an integer
+    # @return an integer
+    def reverseBits(self, n):
+        return int(bin(n)[2:].zfill(32)[::-1], base=2)
+
     # 220 Contain duplicates III (PASSED)
     # Given an array of integers, find out whether
     # there are two distinct indices i and j in the
@@ -111,8 +117,6 @@ class Solution(object):
                 del bucket[nums[i-k]/w]
         return False
 
-
-
     # 283 Move zeros
     def moveZeroes(self, nums):
         """
@@ -124,6 +128,15 @@ class Solution(object):
             if nums[i] != 0:
                 nums[i], nums[zero] = nums[zero], nums[i]
                 zero += 1
+
+    # 326 Power of 3 (PASSED)
+    def isPowerOfThree(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        return n > 0 and (3 ** 21) % n == 0
+
 
     # 343 Integer break (PASSED)
     def integerBreak(self, n):
@@ -156,6 +169,38 @@ class Solution(object):
         # this is actually a brute force solution but with good time cost
         return sorted(a for row in matrix for a in row)[k - 1]
 
+    # 409 Longest Palindrome (PASSED 43ms)
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        d = {}
+        for i in s:
+            if i not in d:
+                d[i] = 1
+            else:
+                d[i] += 1
+        res = 0
+        for i in d.keys():
+            if d[i] % 2 == 0:
+                res += d[i]
+            else:
+                res += d[i] - 1
+        if res == len(s):
+            return res
+        else:
+            return res + 1
+
+    # 461 Hamming distance
+    def hammingDistance(self, x, y):
+        """
+        :type x: int
+        :type y: int
+        :rtype: int
+        """
+        return bin(x ^ y).count('1')
+
     # 504 Base 7 (PASSED)
     def convertToBase7(self, num):
         """
@@ -172,6 +217,28 @@ class Solution(object):
             num = int(num/7)
         return res+(a+str(num))[::-1]
 
+    # 521 Longest Uncommon Subsequence I (PASSED)
+    def findLUSlength(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: int
+        """
+        return -1 if a == b else max(len(a), len(b))
+
+    # 581 Shortest Unsorted Continuous Subarray (PASSED)
+    def findUnsortedSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        a = []
+        s_nums = sorted(nums)
+        for i in range(len(nums)):
+            if s_nums[i] != nums[i]:
+                a += [i]
+        return a[-1] - a[0] + 1 if a else 0
+
     # 628 Maximum product of three numbers (PASSED 117ms)
     def maximumProduct(self, nums):
         """
@@ -180,6 +247,23 @@ class Solution(object):
         """
         a = sorted(nums)
         return max(a[0]*a[1]*a[-1], a[-3]*a[-2]*a[-1])
+
+    # 643 Maximum Average Subarray I (PASSED)
+    def findMaxAverage(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: float
+        """
+        if k == len(nums):
+            return float(sum(nums)) / k
+
+        m = sum(nums[:k])
+        tmp = m
+        for i in range(len(nums) - k):
+            tmp = tmp - nums[i] + nums[i + k]
+            m = max(m, tmp)
+        return float(m) / k
 
     # 696 Count binary strings (PASSED)
     def countBinarySubstrings(self, s):

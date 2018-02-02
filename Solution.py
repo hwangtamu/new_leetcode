@@ -217,6 +217,25 @@ class Solution(object):
             num = int(num/7)
         return res+(a+str(num))[::-1]
 
+    # 506 Relative Ranks
+    def findRelativeRanks(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[str]
+        """
+        a = sorted(nums, reverse=True)
+        res = []
+        for i in nums:
+            if i == a[0]:
+                res += ['Gold Medal']
+            elif i == a[1]:
+                res += ['Silver Medal']
+            elif i == a[2]:
+                res += ['Bronze Medal']
+            else:
+                res += [str(a.index(i) + 1)]
+        return res
+
     # 521 Longest Uncommon Subsequence I (PASSED)
     def findLUSlength(self, a, b):
         """
@@ -273,6 +292,40 @@ class Solution(object):
         """
         s = map(len, s.replace('10', '1 0').replace('01', '0 1').split())
         return sum([min(a, b) for a, b in zip(s, s[1:])])
+
+    # 721. Accounts Merge (PASSED)
+    def accountsMerge(self, accounts):
+        """
+        :type accounts: List[List[str]]
+        :rtype: List[List[str]]
+        """
+
+        d = {}
+        for i, a in enumerate(accounts):
+            for j in a[1:]:
+                if j not in d:
+                    d[j] = []
+                d[j] += [i]
+        visited = [False]*len(accounts)
+
+        def dfs(i, email):
+            if visited[i]:
+                return
+            visited[i] = True
+
+            for m in accounts[i][1:]:
+                email.add(m)
+                for n in d[m]:
+                    dfs(n, email)
+
+        res = []
+        for i, a in enumerate(accounts):
+            if visited[i]:
+                continue
+            n, email = a[0], set()
+            dfs(i, email)
+            res += [[n]+sorted(email)]
+        return res
 
     # 724 Find pivot index (PASSED)
     def pivotIndex(self, nums):
@@ -359,5 +412,6 @@ class Solution(object):
                     return False
         return True
 
+
 solution = Solution()
-print(solution.countAndSay(10))
+print(solution)
